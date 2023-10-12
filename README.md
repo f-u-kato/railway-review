@@ -1,70 +1,57 @@
-# Getting Started with Create React App
+# Railway中級編 Todoアプリをアップデートしよう
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 初期設定
 
-## Available Scripts
+### 必要なツール
 
-In the project directory, you can run:
+1. Node.js v16以降
+2. Yarn v1
 
-### `npm start`
+このRailwayに取り組む方はすでにインストールできていると思いますがされていない方はインストールしてください。  
+初期設定は原則HTML/CSS/JavaScript Railway, React.js Railwayと同様となります。
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+#### railway-todo-appリポジトリのFork
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+画面右上にあるForkより[railway-todo-app](https://github.com/TechBowl-japan/railway-todo-app)のリポジトリを自分のアカウントにForkしてください。
 
-### `npm test`
+#### railway-todo-appリポジトリのClone
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+作成したリポジトリを作業するディレクトリにクローンしましょう。
 
-### `npm run build`
+- Macなら Terminal.app(iTerm2などでも良い)
+- Windowsなら PowerShell(GitBashなどのインストールしたアプリでもう良いです。アプリによってはコマンドが異なることがあります)  
+  で作業するディレクトリを開き、次のコマンドでForkしたReact.js　Railwayのリポジトリをローカルにクローンしてください。
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```powershell
+git clone https://github.com/{GitHubのユーザー名}/railway-todo-app.git
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+SSHでクローンを行う場合には、次のようになります
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```powershell
+git clone git@github.com:[GitHubのユーザー名]/railway-todo-app.git
+```
 
-### `npm run eject`
+#### .envファイルの設定
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+クローンしたリポジトリには.env.sampleというファイルがあります。それをコピーしたものを.envにファイル名を変更してください。  
+フォークして最初の状態ではAPIのURLを.envファイルから読み込むようになっています。それを自身の.envに追記してください。
+APIのURLはTechTrainサービスにログインし、問題文の中で案内されているものを使用してください。
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### パッケージのインストール
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+クローンしたばかりのリポジトリは歯抜けの状態なので、必要なファイルをダウンロードする必要があります。 10 分程度掛かることもあるため、気長に待ちましょう。上から順番に **１つずつ** コマンドを実行しましょう：
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```powershell
+cd railway-todo-app
 
-## Learn More
+yarn install
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### ローカルサーバの起動
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+以下コマンドを実行します。
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```powershell
+yarn start
+```
