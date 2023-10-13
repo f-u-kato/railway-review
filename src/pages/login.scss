@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-.sign-up {
+.login {
   width: 40%;
   margin: 0 auto;
 
@@ -15,21 +15,18 @@
     font-size: 200%;
     margin: 10px auto;
   }
-  .user-icon{
-    font-size: 40%;
-  }
   .click-element {
     display: flex;
-    .sign-up-button {
+    .login-button {
       background-color: #242f9b;
       color: #ffffff;
-      width: 200px;
+      width: 150px;
       font-size: 150%;
       padding: 10px;
       border-radius: 5px;
       margin-left: auto;
     }
-    .login-link {
+    .sign-up-link {
       font-size: 150%;
       margin-top: 10px;
     }
@@ -40,15 +37,15 @@
   }
 }
 @media screen and (max-width: 1100px) {
-  .sign-up {
+  .login {
     width: 70%;
   }
 }
 @media screen and (max-width: 500px) {
-  .sign-up {
+  .login {
     width: 90%;
     font-size: 100%;
-    .sign-up-button {
+    .login-button {
       width: 50%;
     }
   }

@@ -80,12 +80,12 @@ export const Home = () => {
   //   }
   // }
   // document.onkeydown = e => handleListKeyDown(e);
-  const handleListKeyDown = (e,id) => {
-    if (e.key === 'Enter'){
+  const handleListKeyDown = (e, id) => {
+    if (e.key === 'Enter') {
       handleSelectList(id)
     }
   }
-  let tabNum=0
+  let tabNum = 0
   return (
     <div>
       <Header />
@@ -108,13 +108,13 @@ export const Home = () => {
           <ul className="list-tab">
             {lists.map((list, key) => {
               const isActive = list.id === selectListId
-              tabNum+=1
+              tabNum += 1
               return (
                 <li
                   key={key}
                   className={`list-tab-item ${isActive ? 'active' : ''}`}
                   onClick={() => handleSelectList(list.id)}
-                  onKeyDown={(e)=>handleListKeyDown(e,list.id)}
+                  onKeyDown={(e) => handleListKeyDown(e, list.id)}
                   tabIndex={tabNum}
                   role="tab"
                   aria-label={list.title}

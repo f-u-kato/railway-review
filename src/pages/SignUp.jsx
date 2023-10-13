@@ -1,82 +1,105 @@
-import axios from 'axios'
-import React, { useState } from 'react'
-import { useCookies } from 'react-cookie'
-import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate, Navigate } from 'react-router-dom'
-import { signIn } from '../authSlice'
-import { Header } from '../components/Header'
-import { url } from '../const'
-import './signUp.scss'
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useCookies } from 'react-cookie';
+import { Navigate, useNavigate, Link } from 'react-router-dom';
+import { Header } from '../components/Header';
+import './signUp.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { logIn } from '../authSlice';
+import { url } from '../const';
+import { useForm } from 'react-hook-form';
+import Compressor from 'compressorjs';
 
 export const SignUp = () => {
-  const navigate = useNavigate()
-  const auth = useSelector((state) => state.auth.isSignIn)
-  const dispatch = useDispatch()
-  const [email, setEmail] = useState('')
-  const [name, setName] = useState('')
-  const [password, setPassword] = useState('')
-  const [errorMessage, setErrorMessge] = useState()
-  const [cookies, setCookie, removeCookie] = useCookies()
-  const handleEmailChange = (e) => setEmail(e.target.value)
-  const handleNameChange = (e) => setName(e.target.value)
-  const handlePasswordChange = (e) => setPassword(e.target.value)
-  const onSignUp = () => {
-    const data = {
-      email: email,
-      name: name,
-      password: password,
-    }
+  const auth = useSelector((state) => state.auth.isLogIn);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState();
+  const [cookies, setCookie, removeCookie] = useCookies();
+  const [preview, setPreview] = useState('');
 
+  const { register, handleSubmit } = useForm();
+  const onSubmit = (data) => {
     axios
       .post(`${url}/users`, data)
       .then((res) => {
-        const token = res.data.token
-        dispatch(signIn())
-        setCookie('token', token)
-        navigate('/')
+        setCookie('token', res.data.token);
+        dispatch(logIn());
+        navigate('/');
       })
       .catch((err) => {
-        setErrorMessge(`サインアップに失敗しました。 ${err}`)
-      })
+        setErrorMessage(`サインアップに失敗しました。${err}`);
+      });
+  };
 
-    if (auth) return <Navigate to="/" />
-  }
+  const handleChangeFile = (e) => {
+    const { files } = e.target;
+    const file = files[0];
+
+    const compressor = new Compressor(file, {
+      quality: 0.6, 
+      maxWidth: 200, 
+      maxHeight: 200, 
+      success(result) {
+        const previewURL = window.URL.createObjectURL(result);
+        setPreview(previewURL);
+      },
+      error(err) {
+        console.log(err.message);
+      },
+    });
+  };
+
+  if (auth) return <Navigate to="/" />;
+
   return (
     <div>
       <Header />
-      <main className="signup">
-        <h2>新規作成</h2>
+      <div className="sign-up">
+        <h1 className="title">サインアップ</h1>
         <p className="error-message">{errorMessage}</p>
-        <form className="signup-form">
-          <label>メールアドレス</label>
-          <br />
-          <input
-            type="email"
-            onChange={handleEmailChange}
-            className="email-input"
-          />
-          <br />
-          <label>ユーザ名</label>
-          <br />
-          <input
-            type="text"
-            onChange={handleNameChange}
-            className="name-input"
-          />
-          <br />
-          <label>パスワード</label>
-          <br />
-          <input
-            type="password"
-            onChange={handlePasswordChange}
-            className="password-input"
-          />
-          <br />
-          <button type="button" onClick={onSignUp} className="signup-button">
-            作成
-          </button>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div>
+            <label htmlFor="name">名前</label>
+            <br />
+            <input id="name" {...register('name')} placeholder="山田太郎" />
+          </div>
+          <div>
+            <label htmlFor="email">メールアドレス</label>
+            <br />
+            <input id="email" {...register('email')} placeholder="aaa@xxx.yy" />
+          </div>
+          <div>
+            <label htmlFor="password">パスワード</label>
+            <br />
+            <input
+              id="password"
+              {...register('password')}
+              type="password"
+              placeholder="Password"
+            />
+          </div>
+          <div className="user-icon">
+            <label htmlFor="image">
+              <img src={preview} alt="preview" className="preview-img" />
+              <input
+                id="image"
+                type="file"
+                onChange={handleChangeFile}
+                className="input-img"
+              />
+            </label>
+          </div>
+          <div className="click-element">
+            <Link className="login-link" to="/login">
+              ログイン
+            </Link>
+            <button type="submit" className="sign-up-button">
+              サインアップ
+            </button>
+          </div>
         </form>
-      </main>
+      </div>
     </div>
-  )
-}
+  );
+};

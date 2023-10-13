@@ -4,20 +4,20 @@ import { Cookies } from 'react-cookie'
 const cookie = new Cookies()
 
 const initialState = {
-  isSignIn: cookie.get('token') !== undefined,
+  isLogIn: cookie.get('token') !== undefined,
 }
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    signIn: (state) => {
-      state.isSignIn = true
+    logIn: (state) => {
+      state.isLogIn = true
     },
-    signOut: (state) => {
-      state.isSignIn = false
+    logOut: (state) => {
+      state.isLogIn = false
     },
   },
 })
 
-export const { signIn, signOut } = authSlice.actions
+export const { logIn, logOut } = authSlice.actions

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 import { Home } from '../pages/Home'
 import { NotFound } from '../pages/NotFound'
-import { SignIn } from '../pages/SignIn'
+import { LogIn } from '../pages/LogIn'
 import { NewTask } from '../pages/NewTask'
 import { NewList } from '../pages/NewList'
 import { EditTask } from '../pages/EditTask'
@@ -16,7 +16,7 @@ export const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/signin" element={<SignIn />} />
+        <Route path="/login" element={<LogIn />} />
         <Route path="/signup" element={<SignUp />} />
         {auth ? (
           <>
@@ -27,7 +27,7 @@ export const Router = () => {
             <Route path="/lists/:listId/edit" element={<EditList />} />
           </>
         ) : (
-          <Route path="/" element={<Navigate to="/signin" />} />
+          <Route path="/" element={<Navigate to="/login" />} />
         )}
         <Route element={NotFound} />
       </Routes>
