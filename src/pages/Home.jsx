@@ -15,19 +15,20 @@ export const Home = () => {
   const [cookies] = useCookies()
   const handleIsDoneDisplayChange = (e) => setIsDoneDisplay(e.target.value)
   useEffect(() => {
-    axios
-      .get(`${url}/lists`, {
-        headers: {
-          authorization: `Bearer ${cookies.token}`,
-        },
-      })
-      .then((res) => {
-        setLists(res.data)
-        console.log(res.data[0].limit)
-      })
-      .catch((err) => {
-        setErrorMessage(`リストの取得に失敗しました。${err}`)
-      })
+    alert('welcome')
+    // axios
+    //   .get(`${url}/lists`, {
+    //     headers: {
+    //       authorization: `Bearer ${cookies.token}`,
+    //     },
+    //   })
+    //   .then((res) => {
+    //     setLists(res.data)
+    //     console.log(res.data[0].limit)
+    //   })
+    //   .catch((err) => {
+    //     setErrorMessage(`リストの取得に失敗しました。${err}`)
+    //   })
   }, [])
 
   useEffect(() => {

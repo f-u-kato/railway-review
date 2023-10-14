@@ -15,11 +15,22 @@ export const LogIn = () => {
   const navigate = useNavigate()
   const [errorMessage, setErrorMessage] = useState()
   const [cookies, setCookie, removeCookie] = useCookies()
+  const { register, handleSubmit, formState: {errors} } = useForm()
 
-  const { register, handleSubmit } = useForm()
+  const emailRule={
+    required: "メールアドレスを入力してください",
+    pattern:{
+      value:/^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]+.[A-Za-z0-9]+$/,
+      message:'メールアドレスの形式が違います'
+    }
+  }
+  const passwordRule={
+    required: "パスワードを入力してください"
+  }
+
   const onSubmit = (data) => {
     axios
-      .post(`${url}/login`, data)
+      .post(`${url}/signin`, data)
       .then((res) => {
         setCookie('token', res.data.token)
         dispatch(logIn())
@@ -42,23 +53,29 @@ export const LogIn = () => {
           <div>
             <label htmlFor="email">メールアドレス</label>
             <br />
-            <input id="email" {...register('email')} placeholder="aaa@xxx.yy" />
+            <input
+              id="email"
+              {...register('email', emailRule)}
+              placeholder="aaa@xxx.yy"
+            />
+            <p className='error-message' id='email-error'>{errors.email && errors.email.message}</p>
           </div>
           <div>
             <label htmlFor="password">パスワード</label>
             <br />
             <input
               id="password"
-              {...register('password')}
+              {...register('password', passwordRule)}
               type="password"
               placeholder="Password"
             />
+            <p className='error-message' id='password-error'>{errors.password && errors.password.message}</p>
           </div>
           <div className="click-element">
             <Link className="sign-up-link" to="/signup">
               新規作成
             </Link>
-            <button type="submit" className="login-button">
+            <button type="submit" className="login-button" id='submit'>
               ログイン
             </button>
           </div>
