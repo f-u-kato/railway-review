@@ -9,7 +9,7 @@ import { logIn } from '../authSlice'
 import { url } from '../const'
 import { useForm } from 'react-hook-form'
 
-export const LogIn = () => {
+export const Login = () => {
   const auth = useSelector((state) => state.auth.isLogIn)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -37,7 +37,7 @@ export const LogIn = () => {
         navigate('/')
       })
       .catch((err) => {
-        setErrorMessage(`サインインに失敗しました。${err}`)
+        setErrorMessage(`サインインに失敗しました。${err.response.data.ErrorMessageJP}`)
       })
   }
 
@@ -51,9 +51,10 @@ export const LogIn = () => {
         <p className="error-message">{errorMessage}</p>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div>
-            <label htmlFor="email">メールアドレス</label>
+            <label role="label" htmlFor="email">メールアドレス</label>
             <br />
             <input
+              role='input'
               id="email"
               {...register('email', emailRule)}
               placeholder="aaa@xxx.yy"
@@ -61,9 +62,10 @@ export const LogIn = () => {
             <p className='error-message' id='email-error'>{errors.email && errors.email.message}</p>
           </div>
           <div>
-            <label htmlFor="password">パスワード</label>
+            <label role="label" htmlFor="password">パスワード</label>
             <br />
             <input
+              role='input'
               id="password"
               {...register('password', passwordRule)}
               type="password"
@@ -75,7 +77,7 @@ export const LogIn = () => {
             <Link className="sign-up-link" to="/signup">
               新規作成
             </Link>
-            <button type="submit" className="login-button" id='submit'>
+            <button role='button' type="submit" className="login-button" id='submit' >
               ログイン
             </button>
           </div>

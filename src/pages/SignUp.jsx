@@ -17,6 +17,7 @@ export const SignUp = () => {
   const [errorMessage, setErrorMessage] = useState()
   const [cookies, setCookie, removeCookie] = useCookies()
   const [preview, setPreview] = useState('')
+  const [iconImage,setIconImage] = useState('')
   const { register, handleSubmit, formState: {errors} } = useForm()
 
   const emailRule={
@@ -42,18 +43,22 @@ export const SignUp = () => {
       .post(`${url}/users`, data)
       .then((res) => {
         setCookie('token', res.data.token)
-        const iconData={
-          iconUrl:preview,
-          token:res.data.token
-        }
+        const submitData = new FormData()
+        submitData.append("icon", iconImage,iconImage.name)
+        const config={
+          headers:{
+              'Content-Type': 'multipart/form-data',
+              'Authorization': 'Bearer ' + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTc0MzUwMDYsImlhdCI6MTY5NzM0ODYwNiwic3ViIjoiNTQ1NDY1NTczNTQiLCJ1c2VyX2lkIjoiODFhODM0ZGEtZjhiMS00MDE2LWE5NGMtMGY1OTQzMmE2NDNmIn0.uiMgpYvnScjJoLdwoLgk7vERSZXaBFeLMgL2LXtOHZA"
+            }
+          }
         axios
-          .post(`${url}/uploads`,iconData)
+          .post(`${url}/uploads`,submitData,config)
           .then((res)=>{
             dispatch(logIn())
             navigate('/')
           })
           .catch((err) => {
-            setErrorMessage(`サインアップに失敗しました。${err}`)
+            setErrorMessage(`アイコンアップロードに失敗しました．${err}`)
           })
       })
       .catch((err) => {
@@ -70,8 +75,13 @@ export const SignUp = () => {
       maxWidth: 200,
       maxHeight: 200,
       success(result) {
-        const previewURL = window.URL.createObjectURL(result)
-        setPreview(previewURL)
+        setIconImage(result)
+        const reader = new FileReader();
+        reader.readAsDataURL(result);
+        reader.onload = () => {
+          setPreview(reader.result);
+          
+        };
       },
       error(err) {
         console.log(err.message)
@@ -92,7 +102,7 @@ export const SignUp = () => {
             <label htmlFor="name">名前</label>
             <br />
             <input id="name" {...register('name',{required:'入力必須です'})} placeholder="山田太郎" />
-            <p className='error-message'>{errors.password && errors.password.message}</p>
+            <p className='error-message'>{errors.name && errors.name.message}</p>
           </div>
           <div>
             <label htmlFor="email">メールアドレス</label>
@@ -128,7 +138,7 @@ export const SignUp = () => {
           </div>
           <div className="click-element">
             <Link className="login-link" to="/login">
-              ログイン
+              ログイン画面へ
             </Link>
             <button type="submit" className="sign-up-button">
               サインアップ
