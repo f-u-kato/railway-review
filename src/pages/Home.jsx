@@ -6,8 +6,8 @@ import { url } from '../const'
 import './home.scss'
 
 export const Home = () => {
-  const [cookie] = useCookies()
-  alert(cookie)
+  const [cookie] = useCookies(['token'])
+  alert(cookie.token)
   return (
     <div>
       <Header />

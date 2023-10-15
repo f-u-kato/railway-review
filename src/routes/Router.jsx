@@ -7,7 +7,7 @@ import { Login } from '../pages/Login'
 import { SignUp } from '../pages/SignUp'
 
 export const Router = () => {
-  const auth = useSelector((state) => state.auth.isSignIn)
+  const auth = useSelector((state) => state.auth.isLogIn)
 
   return (
     <BrowserRouter>

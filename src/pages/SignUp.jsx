@@ -64,6 +64,8 @@ export const SignUp = () => {
       .catch((err) => {
         setErrorMessage(`サインアップに失敗しました。${err}`)
       })
+
+      if (auth) return <Navigate to="/" />
   }
 
   const handleChangeFile = (e) => {
@@ -89,7 +91,7 @@ export const SignUp = () => {
     })
   }
 
-  if (auth) return <Navigate to="/" />
+  
 
   return (
     <div>

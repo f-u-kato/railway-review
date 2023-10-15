@@ -32,16 +32,18 @@ export const Login = () => {
     axios
       .post(`${url}/signin`, data)
       .then((res) => {
-        setCookie('token', res.data.token)
         dispatch(logIn())
+        setCookie('token', res.data.token)
         navigate('/')
       })
       .catch((err) => {
         setErrorMessage(`サインインに失敗しました。${err.response.data.ErrorMessageJP}`)
       })
+
+      if (auth) return <Navigate to="/" />
   }
 
-  if (auth) return <Navigate to="/" />
+  
 
   return (
     <div>
