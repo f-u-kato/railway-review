@@ -10,9 +10,10 @@ export const Home = () => {
   const [cookies] = useCookies(['token'])
   const [errorMessage, setErrorMessage] = useState()
   const [bookList, setBookList] = useState([])
+  const page = 0
   useEffect(() => {
     axios
-      .get(`${url}/books`, {
+      .get(`${url}/books?offset=${page}`, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },
