@@ -15,17 +15,21 @@ export const Login = () => {
   const navigate = useNavigate()
   const [errorMessage, setErrorMessage] = useState()
   const [cookies, setCookie, removeCookie] = useCookies()
-  const { register, handleSubmit, formState: {errors} } = useForm()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
 
-  const emailRule={
-    required: "メールアドレスを入力してください",
-    pattern:{
-      value:/^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]+.[A-Za-z0-9]+$/,
-      message:'メールアドレスの形式が違います'
-    }
+  const emailRule = {
+    required: 'メールアドレスを入力してください',
+    pattern: {
+      value: /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]+.[A-Za-z0-9]+$/,
+      message: 'メールアドレスの形式が違います',
+    },
   }
-  const passwordRule={
-    required: "パスワードを入力してください"
+  const passwordRule = {
+    required: 'パスワードを入力してください',
   }
 
   const onSubmit = (data) => {
@@ -37,13 +41,13 @@ export const Login = () => {
         navigate('/')
       })
       .catch((err) => {
-        setErrorMessage(`サインインに失敗しました。${err.response.data.ErrorMessageJP}`)
+        setErrorMessage(
+          `サインインに失敗しました。${err.response.data.ErrorMessageJP}`
+        )
       })
 
-      if (auth) return <Navigate to="/" />
+    if (auth) return <Navigate to="/" />
   }
-
-  
 
   return (
     <div>
@@ -53,33 +57,46 @@ export const Login = () => {
         <p className="error-message">{errorMessage}</p>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div>
-            <label role="label" htmlFor="email">メールアドレス</label>
+            <label role="label" htmlFor="email">
+              メールアドレス
+            </label>
             <br />
             <input
-              role='input'
+              role="input"
               id="email"
               {...register('email', emailRule)}
               placeholder="aaa@xxx.yy"
             />
-            <p className='error-message' id='email-error'>{errors.email && errors.email.message}</p>
+            <p className="error-message" id="email-error">
+              {errors.email && errors.email.message}
+            </p>
           </div>
           <div>
-            <label role="label" htmlFor="password">パスワード</label>
+            <label role="label" htmlFor="password">
+              パスワード
+            </label>
             <br />
             <input
-              role='input'
+              role="input"
               id="password"
               {...register('password', passwordRule)}
               type="password"
               placeholder="Password"
             />
-            <p className='error-message' id='password-error'>{errors.password && errors.password.message}</p>
+            <p className="error-message" id="password-error">
+              {errors.password && errors.password.message}
+            </p>
           </div>
           <div className="click-element">
             <Link className="sign-up-link" to="/signup">
               新規作成
             </Link>
-            <button role='button' type="submit" className="login-button" id='submit' >
+            <button
+              role="button"
+              type="submit"
+              className="login-button"
+              id="submit"
+            >
               ログイン
             </button>
           </div>

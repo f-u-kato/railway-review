@@ -17,26 +17,30 @@ export const SignUp = () => {
   const [errorMessage, setErrorMessage] = useState()
   const [cookies, setCookie, removeCookie] = useCookies()
   const [preview, setPreview] = useState('')
-  const [iconImage,setIconImage] = useState('')
-  const { register, handleSubmit, formState: {errors} } = useForm()
+  const [iconImage, setIconImage] = useState('')
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
 
-  const emailRule={
-    required: "入力必須です",
+  const emailRule = {
+    required: '入力必須です',
     maxLength: {
       value: 50,
       message: '最大50文字です',
     },
-    pattern:{
-      value:/^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]+.[A-Za-z0-9]+$/,
-      message:'メールアドレスの形式が違います'
-    }
+    pattern: {
+      value: /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]+.[A-Za-z0-9]+$/,
+      message: 'メールアドレスの形式が違います',
+    },
   }
-  const passwordRule={
-    required: "パスワードを入力してください",
-    minLength:{
-      value:4,
-      message:'4文字以上に設定してください'
-    }
+  const passwordRule = {
+    required: 'パスワードを入力してください',
+    minLength: {
+      value: 4,
+      message: '4文字以上に設定してください',
+    },
   }
   const onSubmit = (data) => {
     axios
@@ -44,16 +48,18 @@ export const SignUp = () => {
       .then((res) => {
         setCookie('token', res.data.token)
         const submitData = new FormData()
-        submitData.append("icon", iconImage,iconImage.name)
-        const config={
-          headers:{
-              'Content-Type': 'multipart/form-data',
-              'Authorization': 'Bearer ' + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTc0MzUwMDYsImlhdCI6MTY5NzM0ODYwNiwic3ViIjoiNTQ1NDY1NTczNTQiLCJ1c2VyX2lkIjoiODFhODM0ZGEtZjhiMS00MDE2LWE5NGMtMGY1OTQzMmE2NDNmIn0.uiMgpYvnScjJoLdwoLgk7vERSZXaBFeLMgL2LXtOHZA"
-            }
-          }
+        submitData.append('icon', iconImage, iconImage.name)
+        const config = {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization:
+              'Bearer ' +
+              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTc0MzUwMDYsImlhdCI6MTY5NzM0ODYwNiwic3ViIjoiNTQ1NDY1NTczNTQiLCJ1c2VyX2lkIjoiODFhODM0ZGEtZjhiMS00MDE2LWE5NGMtMGY1OTQzMmE2NDNmIn0.uiMgpYvnScjJoLdwoLgk7vERSZXaBFeLMgL2LXtOHZA',
+          },
+        }
         axios
-          .post(`${url}/uploads`,submitData,config)
-          .then((res)=>{
+          .post(`${url}/uploads`, submitData, config)
+          .then((res) => {
             dispatch(logIn())
             navigate('/')
           })
@@ -65,7 +71,7 @@ export const SignUp = () => {
         setErrorMessage(`サインアップに失敗しました。${err}`)
       })
 
-      if (auth) return <Navigate to="/" />
+    if (auth) return <Navigate to="/" />
   }
 
   const handleChangeFile = (e) => {
@@ -78,20 +84,17 @@ export const SignUp = () => {
       maxHeight: 200,
       success(result) {
         setIconImage(result)
-        const reader = new FileReader();
-        reader.readAsDataURL(result);
+        const reader = new FileReader()
+        reader.readAsDataURL(result)
         reader.onload = () => {
-          setPreview(reader.result);
-          
-        };
+          setPreview(reader.result)
+        }
       },
       error(err) {
         console.log(err.message)
       },
     })
   }
-
-  
 
   return (
     <div>
@@ -103,8 +106,14 @@ export const SignUp = () => {
           <div>
             <label htmlFor="name">名前</label>
             <br />
-            <input id="name" {...register('name',{required:'入力必須です'})} placeholder="山田太郎" />
-            <p className='error-message'>{errors.name && errors.name.message}</p>
+            <input
+              id="name"
+              {...register('name', { required: '入力必須です' })}
+              placeholder="山田太郎"
+            />
+            <p className="error-message">
+              {errors.name && errors.name.message}
+            </p>
           </div>
           <div>
             <label htmlFor="email">メールアドレス</label>
@@ -114,7 +123,9 @@ export const SignUp = () => {
               {...register('email', emailRule)}
               placeholder="aaa@xxx.yy"
             />
-            <p className='error-message'>{errors.email && errors.email.message}</p>
+            <p className="error-message">
+              {errors.email && errors.email.message}
+            </p>
           </div>
           <div>
             <label htmlFor="password">パスワード</label>
@@ -125,7 +136,9 @@ export const SignUp = () => {
               type="password"
               placeholder="Password"
             />
-            <p className='error-message'>{errors.password && errors.password.message}</p>
+            <p className="error-message">
+              {errors.password && errors.password.message}
+            </p>
           </div>
           <div className="user-icon">
             <label htmlFor="image">
