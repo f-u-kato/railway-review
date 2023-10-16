@@ -1,53 +1,46 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { setCurrentPage } from './paginationActions'
+import { connect, useDispatch, useSelector } from 'react-redux'
+import { nextPage, previousPage } from '../pageSlice'
+import "./pagination.scss"
+import { useNavigate } from 'react-router-dom'
 
-export const Pagination = ({ currentPage, totalPages, setCurrentPage }) => {
-  const handlePageChange = (page) => {
-    setCurrentPage(page)
-  }
-  const buttons = []
-  const prevPage = currentPage - 1
-  const nextPage = currentPage + 1
-
+export const Pagination = () => {
+  const currentPage = useSelector((state)=>state.page)
+  const dispatch=useDispatch()
+  const navigate=useNavigate()
   return (
-    <div>
-      {prevPage > 0 ? (
+    <div className='page-button'>
+      {currentPage > 1 ? (
         <button
           key="prev"
-          className="prev"
-          onClick={() => handlePageChange(prevPage)}
+          className="page-button__prev page-button-item"
+          onClick={() => {
+            dispatch(previousPage());
+            // navigate('/');
+          }}
         >
           前
         </button>
       ) : (
-        <></>
+        <div className='page-button__close page-button-item'>前</div>
       )}
 
-      <button
-        key={currentPage}
-        className="active"
-        onClick={() => handlePageChange(currentPage)}
+      <div
+        className="page-button__current page-button-item"
       >
         {currentPage}
-      </button>
+      </div>
 
       <button
         key="next"
-        className="next"
-        onClick={() => handlePageChange(nextPage)}
+        className="page-button__next page-button-item"
+        onClick={() => {
+          dispatch(nextPage());
+          // navigate('/')
+        }}
       >
         次
       </button>
     </div>
   )
-}
-
-const mapStateToProps = (state) => ({
-  currentPage: state.currentPage,
-  totalPages: state.totalPages,
-})
-
-const mapDispatchToProps = {
-  setCurrentPage,
 }

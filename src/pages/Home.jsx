@@ -5,15 +5,17 @@ import { Header } from '../components/Header'
 import { Navigate, useNavigate, Link } from 'react-router-dom'
 import { url } from '../const'
 import './home.scss'
+import { Pagination } from '../components/Pagination'
+import { useSelector } from 'react-redux'
 
 export const Home = () => {
   const [cookies] = useCookies(['token'])
   const [errorMessage, setErrorMessage] = useState()
   const [bookList, setBookList] = useState([])
-  const page = 0
+  const currentPage = useSelector((state)=>state.page)
   useEffect(() => {
     axios
-      .get(`${url}/books?offset=${page}`, {
+      .get(`${url}/books?offset=${(currentPage-1)*10}`, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },
@@ -26,7 +28,7 @@ export const Home = () => {
           `リストの取得に失敗しました。${err.response.data.ErrorMessageJP}`
         )
       })
-  }, [])
+  },[currentPage])
 
   return (
     <div>
@@ -43,6 +45,7 @@ export const Home = () => {
             </li>
           ))}
         </ul>
+        <Pagination />
       </main>
     </div>
   )
