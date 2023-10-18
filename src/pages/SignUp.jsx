@@ -16,8 +16,8 @@ export const SignUp = () => {
   const navigate = useNavigate()
   const [errorMessage, setErrorMessage] = useState()
   const [cookies, setCookie, removeCookie] = useCookies()
-  const [preview, setPreview] = useState('')
-  const [iconImage, setIconImage] = useState('')
+  const [preview, setPreview] = useState()
+  const [iconImage, setIconImage] = useState()
   const {
     register,
     handleSubmit,
@@ -47,24 +47,29 @@ export const SignUp = () => {
       .post(`${url}/users`, data)
       .then((res) => {
         setCookie('token', res.data.token)
-        const submitData = new FormData()
-        submitData.append('icon', iconImage, iconImage.name)
-        const config = {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization:
-              'Bearer ' + res.data.token,
-          },
+        if (iconImage) {
+          const submitData = new FormData()
+          submitData.append('icon', iconImage)
+          const config = {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              Authorization: 'Bearer ' + res.data.token,
+            },
+          }
+
+          axios
+            .post(`${url}/uploads`, submitData, config)
+            .then((res) => {
+              dispatch(logIn())
+              navigate('/')
+            })
+            .catch((err) => {
+              setErrorMessage(`アイコンアップロードに失敗しました．${err}`)
+            })
+        } else {
+          dispatch(logIn())
+          navigate('/')
         }
-        axios
-          .post(`${url}/uploads`, submitData, config)
-          .then((res) => {
-            dispatch(logIn())
-            navigate('/')
-          })
-          .catch((err) => {
-            setErrorMessage(`アイコンアップロードに失敗しました．${err}`)
-          })
       })
       .catch((err) => {
         setErrorMessage(`サインアップに失敗しました。${err}`)
@@ -148,6 +153,9 @@ export const SignUp = () => {
                 onChange={handleChangeFile}
                 className="input-img"
               />
+              <p className="error-message">
+                {errors.icon && errors.icon.message}
+              </p>
             </label>
           </div>
           <div className="click-element">

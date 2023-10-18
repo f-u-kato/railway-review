@@ -41,12 +41,6 @@
     "lint": "npm run lint:prettier && npm run lint:eslint",
     "fix": "npm run fix:prettier && npm run fix:eslint"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-        ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",

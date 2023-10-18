@@ -21,10 +21,12 @@ export const Header = () => {
       <h1>書籍レビューアプリ</h1>
       {auth ? (
         <>
-        <Link to="/profile" className='edit-profile'>ユーザ情報編集</Link>
-        <button onClick={handleLogOut} className="log-out-button">
-          ログアウト
-        </button>
+          <Link to="/profile" className="edit-profile">
+            ユーザ情報編集
+          </Link>
+          <button onClick={handleLogOut} className="log-out-button">
+            ログアウト
+          </button>
         </>
       ) : (
         <></>

@@ -12,10 +12,10 @@ export const Home = () => {
   const [cookies] = useCookies(['token'])
   const [errorMessage, setErrorMessage] = useState()
   const [bookList, setBookList] = useState([])
-  const currentPage = useSelector((state)=>state.page)
+  const currentPage = useSelector((state) => state.page)
   useEffect(() => {
     axios
-      .get(`${url}/books?offset=${(currentPage-1)*10}`, {
+      .get(`${url}/books?offset=${(currentPage - 1) * 10}`, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },
@@ -28,7 +28,7 @@ export const Home = () => {
           `リストの取得に失敗しました。${err.response.data.ErrorMessageJP}`
         )
       })
-  },[currentPage])
+  }, [currentPage])
 
   return (
     <div>

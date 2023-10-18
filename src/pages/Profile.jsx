@@ -10,12 +10,11 @@ import { useForm } from 'react-hook-form'
 
 export const Profile = () => {
   const [cookies] = useCookies(['token'])
-  const [updateError,setUpdateError]= useState({error:false,message:''})
-  const [infoError,setInfoError]=useState()
-  const [userInfo, setUserInfo] = useState()
+  const [updateError, setUpdateError] = useState()
+  const [infoError, setInfoError] = useState()
+  const [userName, setUserName] = useState()
   const [preview, setPreview] = useState()
   const [iconImage, setIconImage] = useState()
-  const navigate=useNavigate()
   const {
     register,
     handleSubmit,
@@ -23,57 +22,58 @@ export const Profile = () => {
   } = useForm()
   useEffect(() => {
     axios
-      .get(`${url}/users}`, {
+      .get(`${url}/users`, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },
       })
       .then((res) => {
-        setUserInfo(res.data)
-        setIconImage(res.data.iconUrl)
-        const reader = new FileReader()
-        reader.readAsDataURL(res.data.iconUrl)
-        reader.onload = () => {
-          setPreview(reader.result)
+        setUserName(res.data.name)
+        if (res.data.iconUrl) {
+          setPreview(res.data.iconUrl)
+          //blobのアイコンデータが欲しい．．
+          setIconImage(fetch(res.data.iconUrl).then((r) => r.blob()))
         }
-
       })
       .catch((err) => {
-        setInfoError(
-          `ユーザ情報の取得に失敗しました。${err.response.data.ErrorMessageJP}`
-        )
+        setInfoError(`ユーザ情報の取得に失敗しました。${err}`)
       })
-  },[])
+  }, [])
 
-  const onUpdateName = (data) => {
+  const onSubmit = (data) => {
     axios
-      .put(`${url}/users`, data,{
+      .put(`${url}/users`, data, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },
       })
       .then((res) => {
-        axios
-      .put(`${url}/users`, data,{
-        headers: {
-          authorization: `Bearer ${cookies.token}`,
-        },
-      })
-      .then((res) => {
-        setUpdateError(
-            "情報を更新しました。"
-          )
+        if (iconImage) {
+          const submitData = new FormData()
+          submitData.append('icon', iconImage)
+          const config = {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              Authorization: 'Bearer ' + cookies.token,
+            },
+          }
+
+          axios
+            .post(`${url}/uploads`, submitData, config)
+            .then((res) => {
+              setUpdateError('情報を更新しました。')
+            })
+            .catch((err) => {
+              setUpdateError(
+                `アイコンの更新に失敗しました。${err.response.data.ErrorMessageJP}`
+              )
+            })
+        }
       })
       .catch((err) => {
         setUpdateError(
-          `アイコンの更新に失敗しました。${err.response.data.ErrorMessageJP}`
+          `名前の更新に失敗しました。${err.response.data.ErrorMessageJP}`
         )
-      })
-      })
-      .catch((err) => {
-        setNameUpdate(
-            `名前の更新に失敗しました。${err.response.data.ErrorMessageJP}`
-          )
       })
   }
 
@@ -99,14 +99,13 @@ export const Profile = () => {
     })
   }
 
-
   return (
     <div>
       <Header />
       <div className="sign-up">
-        <h1 className="title">サインアップ</h1>
+        <h1 className="title">ユーザ情報編集</h1>
         <p className="error-message">{infoError}</p>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div>
             <label htmlFor="name">名前</label>
             <br />
@@ -114,6 +113,7 @@ export const Profile = () => {
               id="name"
               {...register('name', { required: '入力必須です' })}
               placeholder="山田太郎"
+              defaultValue={userName}
             />
             <p className="error-message">
               {errors.name && errors.name.message}
@@ -140,9 +140,10 @@ export const Profile = () => {
               書籍一覧へ
             </Link>
             <button type="submit" className="sign-up-button">
-              サインアップ
+              アップデート
             </button>
           </div>
+          <p className="error-message">{updateError}</p>
         </form>
       </div>
     </div>
