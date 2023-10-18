@@ -53,8 +53,7 @@ export const SignUp = () => {
           headers: {
             'Content-Type': 'multipart/form-data',
             Authorization:
-              'Bearer ' +
-              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTc0MzUwMDYsImlhdCI6MTY5NzM0ODYwNiwic3ViIjoiNTQ1NDY1NTczNTQiLCJ1c2VyX2lkIjoiODFhODM0ZGEtZjhiMS00MDE2LWE5NGMtMGY1OTQzMmE2NDNmIn0.uiMgpYvnScjJoLdwoLgk7vERSZXaBFeLMgL2LXtOHZA',
+              'Bearer ' + res.data.token,
           },
         }
         axios

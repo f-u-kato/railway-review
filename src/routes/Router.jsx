@@ -5,6 +5,7 @@ import { Home } from '../pages/Home'
 import { NotFound } from '../pages/NotFound'
 import { Login } from '../pages/Login'
 import { SignUp } from '../pages/SignUp'
+import { Profile } from '../pages/Profile'
 
 export const Router = () => {
   const auth = useSelector((state) => state.auth.isLogIn)
@@ -17,6 +18,7 @@ export const Router = () => {
         {auth ? (
           <>
             <Route path="/" element={<Home />} />
+            <Route path="/profile" element={<Profile />} />
           </>
         ) : (
           <Route path="/" element={<Navigate to="/login" />} />

@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom'
 export const Pagination = () => {
   const currentPage = useSelector((state)=>state.page)
   const dispatch=useDispatch()
-  const navigate=useNavigate()
   return (
     <div className='page-button'>
       {currentPage > 1 ? (
@@ -22,7 +21,7 @@ export const Pagination = () => {
           前
         </button>
       ) : (
-        <div className='page-button__close page-button-item'>前</div>
+        <div className='page-button--disable page-button-item'>前</div>
       )}
 
       <div
