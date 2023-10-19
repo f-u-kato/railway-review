@@ -6,6 +6,7 @@ import { NotFound } from '../pages/NotFound'
 import { Login } from '../pages/Login'
 import { SignUp } from '../pages/SignUp'
 import { Profile } from '../pages/Profile'
+import { Register } from '../pages/Register'
 
 export const Router = () => {
   const auth = useSelector((state) => state.auth.isLogIn)
@@ -19,6 +20,7 @@ export const Router = () => {
           <>
             <Route path="/" element={<Home />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/new" element={<Register/>}/>
           </>
         ) : (
           <Route path="/" element={<Navigate to="/login" />} />
