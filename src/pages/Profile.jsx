@@ -31,8 +31,7 @@ export const Profile = () => {
         setUserName(res.data.name)
         if (res.data.iconUrl) {
           setPreview(res.data.iconUrl)
-          //blobのアイコンデータが欲しい．．
-          setIconImage(fetch(res.data.iconUrl).then((r) => r.blob()))
+          axios.get(res.data.iconUrl).then((r) => setIconImage(r.blob()))
         }
       })
       .catch((err) => {
@@ -132,6 +131,7 @@ export const Profile = () => {
                 type="file"
                 onChange={handleChangeFile}
                 className="input-img"
+                defaultValue={iconImage}
               />
             </label>
           </div>
