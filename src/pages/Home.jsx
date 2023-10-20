@@ -45,6 +45,11 @@ export const Home = () => {
       <main className="review-books">
         <h1 className="page-title">書籍レビュー</h1>
         <p className="error-message">{errorMessage}</p>
+        <div  className='new-link'>
+        <Link to="/new">レビュー新規作成</Link>
+
+        </div>
+        
         <ul className="book-list">
           {bookList.map((book, key) => (
             <li key={key} className="book-list-item">

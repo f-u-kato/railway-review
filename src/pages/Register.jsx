@@ -4,12 +4,13 @@ import axios from 'axios'
 import { Header } from '../components/Header'
 import { Navigate, useNavigate, Link } from 'react-router-dom'
 import { url } from '../const'
-import './profile.scss'
+import './register.scss'
 import { useForm } from 'react-hook-form'
 
 export const Register = () => {
   const [cookies] = useCookies(['token'])
-  const [updateError, setUpdateError] = useState()
+  const [updateMessage, setUpdateMessage] = useState()
+  const [isError,setIsError] = useState(false)
   const {
     register,
     handleSubmit,
@@ -23,15 +24,17 @@ export const Register = () => {
         },
       })
       .then(() => {
-        setUpdateError('情報を更新しました。')
+        setUpdateMessage('レビューを登録しました。')
+        setIsError(false)
       })
       .catch((err) => {
-        setUpdateError(
-          `名前の更新に失敗しました。${err.response.data.ErrorMessageJP}`
+        setUpdateMessage(
+          `レビューの登録に失敗しました。${err.response.data.ErrorMessageJP}`
         )
+        setIsError(true)
       })
   }
-
+  const updateMessageClass= isError ? 'error-message':'success-message' ;
 
 
   return (
@@ -54,7 +57,7 @@ export const Register = () => {
           </div>
           <br/>
           <div>
-            <label htmlFor="url"></label>
+            <label htmlFor="url">URL</label>
             <br />
             <input
               id="url"
@@ -67,9 +70,9 @@ export const Register = () => {
           </div>
           <br/>
           <div>
-            <label htmlFor="detail"></label>
+            <label htmlFor="detail">詳細</label>
             <br />
-            <input
+            <textarea
               id="detail"
               {...register('detail', { required: '入力必須です' })}
               placeholder=""
@@ -81,7 +84,7 @@ export const Register = () => {
           <div>
             <label htmlFor="review">レビュー</label>
             <br />
-            <input
+            <textarea
               id="review"
               {...register('review', { required: '入力必須です' })}
               placeholder=""
@@ -98,7 +101,7 @@ export const Register = () => {
               新規作成
             </button>
           </div>
-          <p className="error-message">{updateError}</p>
+          <p className={updateMessageClass}>{updateMessage}</p>
         </form>
       </div>
     </div>

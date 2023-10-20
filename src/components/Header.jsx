@@ -16,7 +16,6 @@ export const Header = () => {
   const handleLogOut = () => {
     dispatch(logOut())
     removeCookie('token')
-    navigate('/login')
   }
   useEffect(()=>{
   if (auth){

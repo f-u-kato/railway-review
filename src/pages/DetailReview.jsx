@@ -7,9 +7,10 @@ import { url } from '../const'
 import './profile.scss'
 import { useForm } from 'react-hook-form'
 
-export const EditReview = () => {
+export const DetailReview = () => {
   const [cookies] = useCookies(['token'])
   const [updateError, setUpdateError] = useState()
+  const [bookDetail, setBookDetail] = useState()
   const { bookId } = useParams()
   const {
     register,
@@ -17,41 +18,24 @@ export const EditReview = () => {
     formState: { errors },
   } = useForm()
 
+  
+
   useEffect(()=>{
-    axios.get(
-        `${url}/books/${bookId}`,{
-            "headers":{authorization: `Bearer ${cookies.token}`,}
-        }
-    ).then(()=>{
-
+    const data= {"id":bookId}
+    const headers={"headers":{authorization: `Bearer ${cookies.token}`,}}
+    axios.get(`${url}/books/${bookId}`,data,headers)
+    .then((res)=>{
+      setBookDetail(res.data)
     }
-
     )
   })
-
-  const onSubmit = (data) => {
-    axios
-      .post(`${url}/books`, data, {
-        headers: {
-          authorization: `Bearer ${cookies.token}`,
-        },
-      })
-      .then(() => {
-        setUpdateError('情報を更新しました。')
-      })
-      .catch((err) => {
-        setUpdateError(
-          `名前の更新に失敗しました。${err.response.data.ErrorMessageJP}`
-        )
-      })
-  }
 
 
 
   return (
     <div>
       <Header />
-      <div className="new-review">
+      <div className="detail-review">
         <h1 className="title">書籍レビュー登録</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div>
