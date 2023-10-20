@@ -5,68 +5,29 @@ import { Header } from '../components/Header'
 import { Navigate, useNavigate, Link } from 'react-router-dom'
 import { url } from '../const'
 import './profile.scss'
-import Compressor from 'compressorjs'
 import { useForm } from 'react-hook-form'
 
-export const Profile = () => {
+export const EditReview = () => {
   const [cookies] = useCookies(['token'])
   const [updateError, setUpdateError] = useState()
-  const [infoError, setInfoError] = useState()
-  const [userName, setUserName] = useState()
-  const [preview, setPreview] = useState()
-  const [iconImage, setIconImage] = useState()
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm()
-  useEffect(() => {
+
+  useEffect(()=>{
     axios
-      .get(`${url}/users`, {
-        headers: {
-          authorization: `Bearer ${cookies.token}`,
-        },
-      })
-      .then((res) => {
-        setUserName(res.data.name)
-        if (res.data.iconUrl) {
-          setPreview(res.data.iconUrl)
-        }
-      })
-      .catch((err) => {
-        setInfoError(`ユーザ情報の取得に失敗しました。${err}`)
-      })
-  }, [])
+  })
 
   const onSubmit = (data) => {
     axios
-      .put(`${url}/users`, data, {
+      .post(`${url}/books`, data, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },
       })
-      .then((res) => {
-        if (iconImage) {
-          const submitData = new FormData()
-          submitData.append('icon', iconImage)
-          const config = {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              Authorization: 'Bearer ' + cookies.token,
-            },
-          }
-
-          axios
-            .post(`${url}/uploads`, submitData, config)
-            .then((res) => {
-              setUpdateError('情報を更新しました。')
-            })
-            .catch((err) => {
-              setUpdateError(
-                `アイコンの更新に失敗しました。${err.response.data.ErrorMessageJP}`
-              )
-            })
-        }
+      .then(() => {
         setUpdateError('情報を更新しました。')
       })
       .catch((err) => {
@@ -76,58 +37,63 @@ export const Profile = () => {
       })
   }
 
-  const handleChangeFile = (e) => {
-    const { files } = e.target
-    const file = files[0]
 
-    const compressor = new Compressor(file, {
-      quality: 0.6,
-      maxWidth: 200,
-      maxHeight: 200,
-      success(result) {
-        setIconImage(result)
-        const reader = new FileReader()
-        reader.readAsDataURL(result)
-        reader.onload = () => {
-          setPreview(reader.result)
-        }
-      },
-      error(err) {
-        console.log(err.message)
-      },
-    })
-  }
-  const updateErrorClass= updateError=="情報を更新しました。" ? 'success-message' : 'error-message';
+
   return (
     <div>
       <Header />
-      <div className="user-edit">
-        <h1 className="title">ユーザ情報編集</h1>
-        <p className="error-message">{infoError}</p>
+      <div className="new-review">
+        <h1 className="title">書籍レビュー登録</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div>
-            <label htmlFor="name">名前</label>
+            <label htmlFor="title">タイトル</label>
             <br />
             <input
-              id="name"
-              {...register('name', { required: '入力必須です' })}
-              placeholder="山田太郎"
-              defaultValue={userName}
+              id="title"
+              {...register('title', { required: '入力必須です' })}
+              placeholder="タイトル"
             />
             <p className="error-message">
-              {errors.name && errors.name.message}
+              {errors.title && errors.title.message}
             </p>
           </div>
-          <div className="user-icon">
-            <label htmlFor="image">
-              <img src={preview} alt="preview" className="preview-img" />
-              <input
-                id="image"
-                type="file"
-                onChange={handleChangeFile}
-                className="input-img"
-              />
-            </label>
+          <br/>
+          <div>
+            <label htmlFor="url"></label>
+            <br />
+            <input
+              id="url"
+              {...register('url', { required: '入力必須です' })}
+              placeholder="https://..."
+            />
+            <p className="error-message">
+              {errors.url && errors.url.message}
+            </p>
+          </div>
+          <br/>
+          <div>
+            <label htmlFor="detail"></label>
+            <br />
+            <input
+              id="detail"
+              {...register('detail', { required: '入力必須です' })}
+              placeholder=""
+            />
+            <p className="error-message">
+              {errors.detail && errors.detail.message}
+            </p>
+          </div>
+          <div>
+            <label htmlFor="review">レビュー</label>
+            <br />
+            <input
+              id="review"
+              {...register('review', { required: '入力必須です' })}
+              placeholder=""
+            />
+            <p className="error-message">
+              {errors.detail && errors.detail.message}
+            </p>
           </div>
           <div className="click-element">
             <Link className="login-link" to="/">
@@ -137,7 +103,7 @@ export const Profile = () => {
               アップデート
             </button>
           </div>
-          <p className={updateErrorClass}>{updateError}</p>
+          <p className="error-message">{updateError}</p>
         </form>
       </div>
     </div>

@@ -14,16 +14,16 @@ export const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         {auth ? (
           <>
-            <Route path="/" element={<Home />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/new" element={<Register/>}/>
           </>
         ) : (
-          <Route path="/" element={<Navigate to="/login" />} />
+          <></>
         )}
         <Route element={NotFound} />
       </Routes>

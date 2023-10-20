@@ -10,10 +10,19 @@
   label {
     font-size: 200%;
   }
-  input {
+  input{
     width: 100%;
     font-size: 200%;
     margin: 10px auto;
+  }
+  .input-label {
+    width: 100%;
+    font-size: 200%;
+    margin: 10px auto;
+    border: solid;
+    .input-img{
+      display: none;
+    }
   }
   .user-icon {
     font-size: 40%;

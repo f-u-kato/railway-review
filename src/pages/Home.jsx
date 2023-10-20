@@ -9,17 +9,26 @@ import { Pagination } from '../components/Pagination'
 import { useSelector } from 'react-redux'
 
 export const Home = () => {
+  const auth = useSelector((state) => state.auth.isLogIn)
   const [cookies] = useCookies(['token'])
   const [errorMessage, setErrorMessage] = useState()
   const [bookList, setBookList] = useState([])
   const currentPage = useSelector((state) => state.page)
+  
+  const urlAPI=`${url}/public/books?offset=${(currentPage - 1) * 10}`
+  const headerAPI={}
+  if (auth){
+    const urlAPI=`${url}/books?offset=${(currentPage - 1) * 10}`
+    const headerAPI={
+      headers: {
+        authorization: `Bearer ${cookies.token}`,
+      },
+    }
+  }
+
   useEffect(() => {
     axios
-      .get(`${url}/books?offset=${(currentPage - 1) * 10}`, {
-        headers: {
-          authorization: `Bearer ${cookies.token}`,
-        },
-      })
+      .get(`${urlAPI}`, headerAPI)
       .then((res) => {
         setBookList(res.data)
       })

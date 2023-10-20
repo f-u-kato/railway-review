@@ -10,7 +10,8 @@ import { useForm } from 'react-hook-form'
 
 export const Profile = () => {
   const [cookies] = useCookies(['token'])
-  const [updateError, setUpdateError] = useState()
+  const [updateMessage, setUpdateMessage] = useState()
+  const [isError,setIsError]=useState(false)
   const [infoError, setInfoError] = useState()
   const [userName, setUserName] = useState()
   const [preview, setPreview] = useState()
@@ -59,20 +60,23 @@ export const Profile = () => {
           axios
             .post(`${url}/uploads`, submitData, config)
             .then((res) => {
-              setUpdateError('情報を更新しました。')
+              setUpdateMessage('情報を更新しました。')
+              setIsError(false)
             })
             .catch((err) => {
-              setUpdateError(
+              setUpdateMessage(
                 `アイコンの更新に失敗しました。${err.response.data.ErrorMessageJP}`
               )
+              setIsError(true)
             })
         }
-        setUpdateError('情報を更新しました。')
+        setUpdateMessage('情報を更新しました。')
       })
       .catch((err) => {
-        setUpdateError(
+        setUpdateMessage(
           `名前の更新に失敗しました。${err.response.data.ErrorMessageJP}`
         )
+        setIsError(true)
       })
   }
 
@@ -97,7 +101,7 @@ export const Profile = () => {
       },
     })
   }
-  const updateErrorClass= updateError=="情報を更新しました。" ? 'success-message' : 'error-message';
+  const updateMessageClass= isError ? 'error-message':'success-message' ;
   return (
     <div>
       <Header />
@@ -121,12 +125,15 @@ export const Profile = () => {
           <div className="user-icon">
             <label htmlFor="image">
               <img src={preview} alt="preview" className="preview-img" />
+              <br/>
+              <label className='input-label'>
               <input
                 id="image"
                 type="file"
                 onChange={handleChangeFile}
                 className="input-img"
-              />
+              />ファイルを選択
+              </label>
             </label>
           </div>
           <div className="click-element">
@@ -137,7 +144,7 @@ export const Profile = () => {
               アップデート
             </button>
           </div>
-          <p className={updateErrorClass}>{updateError}</p>
+          <p className={updateMessageClass}>{updateMessage}</p>
         </form>
       </div>
     </div>

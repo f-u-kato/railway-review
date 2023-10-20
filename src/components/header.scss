@@ -7,9 +7,13 @@
   color: #ffffff;
   display: flex;
   justify-content: space-between;
-  .edit-profile {
+  .user-name {
     color: #ffffff;
     margin: auto 25px auto auto;
+  }
+  .edit-profile {
+    color: #ffffff;
+    margin: auto 25px auto 0;
   }
   .log-out-button {
     color: #ffffff;
