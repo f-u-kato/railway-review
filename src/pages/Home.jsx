@@ -52,7 +52,10 @@ export const Home = () => {
         <ul className="book-list">
           {bookList.map((book, key) => (
             <li key={key} className="book-list-item">
-              <Link to={`/detail/${book.id}`} className="book-list-item__link">
+              <Link
+                to={auth ? `/detail/${book.id}` : '/login'}
+                className="book-list-item__link"
+              >
                 {book.title}
               </Link>
             </li>

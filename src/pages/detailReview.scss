@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-.detail-review {
+.review {
   width: 40%;
   margin: 0 auto;
 
@@ -9,31 +9,33 @@
   }
   .review-body {
     width: 100%;
-    font-size: 200%;
+    label {
+      font-size: 200%;
+    }
+
     margin: 10px auto;
-    .review-info{
-      width:100%;
-      border:solid;
-      .review-url{
-        padding:auto
-      }
+    .review-info {
+      width: 100%;
+      border: solid;
+      font-size: 200%;
+      padding: 5px;
     }
     .review-detail {
       height: 200px;
-      font-size:80%;
+      font-size: 250%;
       resize: none;
+      padding: 10px;
     }
-    .review-main{
-      height:300px;
-      font-size:80%;
-      resize:none;
-
+    .review-main {
+      height: 300px;
+      font-size: 250%;
+      resize: none;
+      padding: 10px;
     }
   }
-  .review-reviewer{
+  .review-reviewer {
     text-align: right;
   }
-  
 
   .click-element {
     display: flex;
@@ -46,7 +48,7 @@
       border-radius: 5px;
       margin-left: auto;
     }
-    .login-link {
+    .home-link {
       font-size: 150%;
       margin-top: 10px;
     }
@@ -60,12 +62,12 @@
   }
 }
 @media screen and (max-width: 1100px) {
-  .user-edit {
+  .review {
     width: 70%;
   }
 }
 @media screen and (max-width: 500px) {
-  .user-edit {
+  .review {
     width: 90%;
     font-size: 100%;
     .update-button {

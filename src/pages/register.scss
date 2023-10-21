@@ -18,16 +18,18 @@
   textarea#detail {
     resize: none;
     width: 100%;
-    font-size: 200%;
+    font-size: 250%;
     height: 200px;
     margin: 10px auto;
+    padding: 5px;
   }
   textarea#review {
     resize: none;
     width: 100%;
-    font-size: 200%;
+    font-size: 250%;
     height: 300px;
     margin: 10px auto;
+    padding: 5px;
   }
   .click-element {
     display: flex;

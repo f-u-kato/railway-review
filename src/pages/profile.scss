@@ -18,14 +18,14 @@
   .input-label {
     width: 100%;
     font-size: 200%;
-    margin: 10px auto;
-    border: solid;
+    border: solid 1px;
     .input-img {
       display: none;
     }
   }
   .user-icon {
     font-size: 40%;
+    margin: 10px 0;
   }
   .click-element {
     display: flex;

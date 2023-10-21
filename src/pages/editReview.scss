@@ -1,10 +1,10 @@
 @charset "utf-8";
 
-.user-edit {
+.review {
   width: 40%;
   margin: 0 auto;
 
-  .title {
+  .page-title {
     font-size: 300%;
   }
   label {
@@ -15,20 +15,33 @@
     font-size: 200%;
     margin: 10px auto;
   }
-  .input-label {
+  textarea#detail {
+    resize: none;
     width: 100%;
-    font-size: 200%;
+    font-size: 240%;
+    height: 200px;
     margin: 10px auto;
-    border: solid;
-    .input-img {
-      display: none;
-    }
+    padding: 10px;
   }
-  .user-icon {
-    font-size: 40%;
+  textarea#review {
+    resize: none;
+    width: 100%;
+    font-size: 240%;
+    height: 300px;
+    margin: 10px auto;
+    padding: 10px;
   }
   .click-element {
     display: flex;
+    .delete-button {
+      background-color: #ff0000;
+      color: #ffffff;
+      width: 200px;
+      font-size: 150%;
+      padding: 10px;
+      border-radius: 5px;
+      margin-left: auto;
+    }
     .update-button {
       background-color: #242f9b;
       color: #ffffff;
@@ -36,7 +49,7 @@
       font-size: 150%;
       padding: 10px;
       border-radius: 5px;
-      margin-left: auto;
+      margin-left: 30px;
     }
     .login-link {
       font-size: 150%;

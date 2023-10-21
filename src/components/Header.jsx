@@ -36,7 +36,11 @@ export const Header = () => {
 
   return (
     <header className="header">
-      <h1>書籍レビューアプリ</h1>
+      <h1>
+        <Link className="header-title" to="/">
+          書籍レビューアプリ
+        </Link>
+      </h1>
       {auth ? (
         <>
           <p className="user-name">{userName}</p>
