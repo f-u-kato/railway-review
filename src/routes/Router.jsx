@@ -19,12 +19,13 @@ export const Router = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/detail/*" element={<DetailReview />} />
-        <Route path="/edit/*" element={<EditReview />} />
+        <Route path="/detail/:bookId" element={<DetailReview />} />
+
         {auth ? (
           <>
             <Route path="/profile" element={<Profile />} />
-            <Route path="/new" element={<Register/>}/>
+            <Route path="/new" element={<Register />} />
+            <Route path="/edit/:bookId" element={<EditReview />} />
           </>
         ) : (
           <></>

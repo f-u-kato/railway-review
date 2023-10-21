@@ -1,35 +1,43 @@
 @charset "utf-8";
 
-.user-edit {
+.detail-review {
   width: 40%;
   margin: 0 auto;
 
-  .title {
+  .page-title {
     font-size: 300%;
   }
-  label {
-    font-size: 200%;
-  }
-  input {
+  .review-body {
     width: 100%;
     font-size: 200%;
     margin: 10px auto;
-  }
-  .input-label {
-    width: 100%;
-    font-size: 200%;
-    margin: 10px auto;
-    border: solid;
-    .input-img {
-      display: none;
+    .review-info{
+      width:100%;
+      border:solid;
+      .review-url{
+        padding:auto
+      }
+    }
+    .review-detail {
+      height: 200px;
+      font-size:80%;
+      resize: none;
+    }
+    .review-main{
+      height:300px;
+      font-size:80%;
+      resize:none;
+
     }
   }
-  .user-icon {
-    font-size: 40%;
+  .review-reviewer{
+    text-align: right;
   }
+  
+
   .click-element {
     display: flex;
-    .update-button {
+    .edit-button {
       background-color: #242f9b;
       color: #ffffff;
       width: 200px;

@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form'
 export const Register = () => {
   const [cookies] = useCookies(['token'])
   const [updateMessage, setUpdateMessage] = useState()
-  const [isError,setIsError] = useState(false)
+  const [isError, setIsError] = useState(false)
   const {
     register,
     handleSubmit,
@@ -34,8 +34,7 @@ export const Register = () => {
         setIsError(true)
       })
   }
-  const updateMessageClass= isError ? 'error-message':'success-message' ;
-
+  const updateMessageClass = isError ? 'error-message' : 'success-message'
 
   return (
     <div>
@@ -55,7 +54,7 @@ export const Register = () => {
               {errors.title && errors.title.message}
             </p>
           </div>
-          <br/>
+          <br />
           <div>
             <label htmlFor="url">URL</label>
             <br />
@@ -64,11 +63,9 @@ export const Register = () => {
               {...register('url', { required: '入力必須です' })}
               placeholder="https://..."
             />
-            <p className="error-message">
-              {errors.url && errors.url.message}
-            </p>
+            <p className="error-message">{errors.url && errors.url.message}</p>
           </div>
-          <br/>
+          <br />
           <div>
             <label htmlFor="detail">詳細</label>
             <br />

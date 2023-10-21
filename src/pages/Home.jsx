@@ -14,12 +14,12 @@ export const Home = () => {
   const [errorMessage, setErrorMessage] = useState()
   const [bookList, setBookList] = useState([])
   const currentPage = useSelector((state) => state.page)
-  
-  const urlAPI=`${url}/public/books?offset=${(currentPage - 1) * 10}`
-  const headerAPI={}
-  if (auth){
-    const urlAPI=`${url}/books?offset=${(currentPage - 1) * 10}`
-    const headerAPI={
+
+  const urlAPI = `${url}/public/books?offset=${(currentPage - 1) * 10}`
+  const headerAPI = {}
+  if (auth) {
+    const urlAPI = `${url}/books?offset=${(currentPage - 1) * 10}`
+    const headerAPI = {
       headers: {
         authorization: `Bearer ${cookies.token}`,
       },
@@ -45,15 +45,14 @@ export const Home = () => {
       <main className="review-books">
         <h1 className="page-title">書籍レビュー</h1>
         <p className="error-message">{errorMessage}</p>
-        <div  className='new-link'>
-        <Link to="/new">レビュー新規作成</Link>
-
+        <div className="new-link">
+          <Link to="/new">レビュー新規作成</Link>
         </div>
-        
+
         <ul className="book-list">
           {bookList.map((book, key) => (
             <li key={key} className="book-list-item">
-              <Link to={`/books/${book.id}`} className="book-list-item__link">
+              <Link to={`/detail/${book.id}`} className="book-list-item__link">
                 {book.title}
               </Link>
             </li>

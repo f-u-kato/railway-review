@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form'
 export const Profile = () => {
   const [cookies] = useCookies(['token'])
   const [updateMessage, setUpdateMessage] = useState()
-  const [isError,setIsError]=useState(false)
+  const [isError, setIsError] = useState(false)
   const [infoError, setInfoError] = useState()
   const [userName, setUserName] = useState()
   const [preview, setPreview] = useState()
@@ -101,7 +101,7 @@ export const Profile = () => {
       },
     })
   }
-  const updateMessageClass= isError ? 'error-message':'success-message' ;
+  const updateMessageClass = isError ? 'error-message' : 'success-message'
   return (
     <div>
       <Header />
@@ -125,14 +125,15 @@ export const Profile = () => {
           <div className="user-icon">
             <label htmlFor="image">
               <img src={preview} alt="preview" className="preview-img" />
-              <br/>
-              <label className='input-label'>
-              <input
-                id="image"
-                type="file"
-                onChange={handleChangeFile}
-                className="input-img"
-              />ファイルを選択
+              <br />
+              <label className="input-label">
+                <input
+                  id="image"
+                  type="file"
+                  onChange={handleChangeFile}
+                  className="input-img"
+                />
+                ファイルを選択
               </label>
             </label>
           </div>
